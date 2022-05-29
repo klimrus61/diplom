@@ -7,4 +7,9 @@ class ArticleList(generic.ListView):
     template_name = 'index.html'
 
 
+class ArticleDetail(generic.DetailView):
+    model = Article
+    template_name = 'article_detail.html'
+
+
 
