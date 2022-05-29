@@ -6,7 +6,15 @@
       <div class="card-body">
         <h1>{% block title %} {{ object.title }} {% endblock title %}</h1>
         <p class=" text-muted">{{ article.author }} | {{ article.created_on }}</p>
-        <p class="card-text ">{{ object.content | safe }}</p>
+        <p class="card-text"> Потратил: {{ worker.work_post }} рублей</p>
+        <p class="card-text"> Потратил: {{ worker.trail }} рублей</p>
+        <p class="card-text"> Номера билетов: {{article.text_b|slice:":200" }}</p>
+        <p class="card-text"> Период поездок с {{ article.data_per_1 }} по {{ article.data_per_2 }}</p>
+        <p class="card-text"> Количество поездок: {{ article.trips_num }}</p>
+        <p class="card-text"> Дней отработал: {{ article.num_days_worked }}</p>
+        <p class="card-text"> Проверил: {{ article.pers_check }}</p>
+        <p class="card-text"> Потратил: {{ article.price }} рублей</p>
+
       </div>
     </div>
     {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}

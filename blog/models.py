@@ -6,12 +6,17 @@ from django.urls import reverse
 
 
 STATUS = (
-    (0,"Draft"),
-    (1,"Publish")
+    (0,"Обрабатывается"),
+    (1,"Принят"),
+    (2,"Ошибка")
 )
 
 
 class Moderator(models.Model):
+
+    class Meta:
+        db_table = "moderator"
+
     full_name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -19,6 +24,10 @@ class Moderator(models.Model):
 
 
 class Worker(models.Model):
+
+    class Meta:
+        db_table = "worker"
+
     full_name = models.CharField(max_length=100)
     trail = models.CharField(max_length=255)
     work_post = models.CharField(max_length=20)
@@ -40,9 +49,14 @@ class Worker(models.Model):
 
 
 class Article(models.Model):
+
+    class Meta:
+        db_table = "article"
+
     title = models.CharField(max_length=100)
     slug = models.SlugField(blank=True, null=True)
     created_on = models.DateField(auto_now=True, editable=True)
+    price = models.DecimalField(max_digits=7, decimal_places=2, default=0)
     text_b = models.TextField(blank=True, null=True, help_text='Введите номера билетов')
     trips_num = models.DecimalField(max_digits=2, decimal_places=0)  #Кол во поездок
     num_days_worked = models.DecimalField(max_digits=2, decimal_places=0, blank=True, null=True)
@@ -50,6 +64,8 @@ class Article(models.Model):
     author = models.ForeignKey(Worker, on_delete=models.CASCADE)
     pers_check = models.ForeignKey(Moderator, on_delete=models.CASCADE)
     status = models.IntegerField(choices=STATUS, default=0)
+    data_per_1 = models.DateField(default=timezone.now)
+    data_per_2 = models.DateField(default=timezone.now)
 
     class Meta:
         ordering = ['-created_on']

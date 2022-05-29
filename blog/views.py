@@ -1,5 +1,5 @@
 from django.views import generic
-from .models import Article
+from .models import Article, Worker, Moderator
 
 
 class ArticleList(generic.ListView):
@@ -10,6 +10,4 @@ class ArticleList(generic.ListView):
 class ArticleDetail(generic.DetailView):
     model = Article
     template_name = 'article_detail.html'
-
-
 

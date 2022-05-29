@@ -39,7 +39,12 @@
                 <div class="card-body">
                     <h2 class="card-title">{{ article.title }}</h2>
                     <p class="card-text text-muted h6">{{ article.author }} | {{ article.created_on}} </p>
-                    <p class="card-text">{{article.text_b|slice:":200" }}</p>
+                    <p class="card-text"> Номера билетов: {{article.text_b|slice:":200" }}</p>
+                    <p class="card-text"> Количество поездок: {{ article.trips_num }}</p>
+                    <p class="card-text"> Дней отработал: {{ article.num_days_worked }}</p>
+                    <p class="card-text"> Проверил: {{ article.pers_check }}</p>
+                    <p class="card-text"> Период поездок с {{ article.data_per_1 }} по {{ article.data_per_2 }}</p>
+                    <p class="card-text">{{ article.num_days_worked }}</p>
                     <a href="{% url 'article_detail' article.slug  %}" class="btn btn-primary">Read More &rarr;</a>
                 </div>
             </div>
