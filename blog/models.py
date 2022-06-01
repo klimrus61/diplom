@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 from django.template.defaultfilters import slugify  # new
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 STATUS = (
@@ -28,6 +29,7 @@ class Worker(models.Model):
     class Meta:
         db_table = "worker"
 
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     full_name = models.CharField(max_length=100)
     trail = models.CharField(max_length=255)
     work_post = models.CharField(max_length=20)
