@@ -6,9 +6,8 @@
       <div class="card-body">
         <h1>{% block title %} {{ object.title }} {% endblock title %}</h1>
         <p class=" text-muted">{{ article.author }} | {{ article.created_on }}</p>
-        <p class="card-text"> Должность работника: {{ worker.work_post }} табельный № {{ worker.tabel_num }} </p>
-        <p class="card-text"> Принят на работу: {{ worker.hired }} приказом {{ worker.order_num }} </p>
-        <p class="card-text"> Маршрут {{ worker.trail }} </p>
+        <p class="card-text"> Маршрут работника: {{ worker.trail }} </p>
+        <p class="card-text"> {{ worker }} </p>
         <p class="card-text"> Номера билетов: {{article.text_b|slice:":200" }}</p>
         <p class="card-text"> Период поездок с {{ article.data_per_1 }} по {{ article.data_per_2 }}</p>
         <p class="card-text"> Количество поездок: {{ article.trips_num }}</p>

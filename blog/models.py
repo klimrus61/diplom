@@ -61,7 +61,7 @@ class Article(models.Model):
     trips_num = models.DecimalField(max_digits=2, decimal_places=0)  #Кол во поездок
     num_days_worked = models.DecimalField(max_digits=2, decimal_places=0, blank=True, null=True)
     day_verify = models.DateField(blank=True, null=True)  # day checks
-    author = models.ForeignKey(Worker, on_delete=models.CASCADE)
+    author = models.ForeignKey(Worker, on_delete=models.CASCADE, related_name='author')
     pers_check = models.ForeignKey(Moderator, on_delete=models.CASCADE)
     status = models.IntegerField(choices=STATUS, default=0)
     data_per_1 = models.DateField(default=timezone.now)
