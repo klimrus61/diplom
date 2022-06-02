@@ -6,6 +6,13 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 
+
+class AddArticleView(generic.CreateView):
+    model = Article
+    template_name = 'blog/add_article.html'
+    fields = ['title', 'author', 'price', 'text_b', 'trips_num', 'data_per_1', 'data_per_2']
+
+
 def work_art_det(request, pk):
     article = get_object_or_404(Article, pk=pk) # Article.objects.get(pk=pk) # order_by('id')[pk-1]
     worker = article.author  #Worker.objects.filter(id=pk).prefetch_related('author')

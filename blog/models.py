@@ -64,7 +64,7 @@ class Article(models.Model):
     num_days_worked = models.DecimalField(max_digits=2, decimal_places=0, blank=True, null=True)
     day_verify = models.DateField(blank=True, null=True)  # day checks
     author = models.ForeignKey(Worker, on_delete=models.CASCADE, related_name='author')
-    pers_check = models.ForeignKey(Moderator, on_delete=models.CASCADE)
+    pers_check = models.ForeignKey(Moderator, on_delete=models.SET_NULL, blank=True, null=True)
     status = models.IntegerField(choices=STATUS, default=0)
     data_per_1 = models.DateField(default=timezone.now)
     data_per_2 = models.DateField(default=timezone.now)
@@ -74,3 +74,6 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('article_detail', kwargs={'pk': self.pk})
