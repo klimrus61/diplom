@@ -3,6 +3,7 @@ from .models import Article, Worker, Moderator
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import NewUserForm
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 
@@ -13,11 +14,22 @@ class AddArticleView(generic.CreateView):
     fields = ['title', 'author', 'price', 'text_b', 'trips_num', 'data_per_1', 'data_per_2']
 
 
+def article_list(request):
+    article = Article.objects.filter(status=1, author_id=request.user.id).order_by('-created_on')
+    context = {
+        'article_list': article,
+    }
+    return render(request, 'index.html', context)
+
+
 def work_art_det(request, pk):
     article = get_object_or_404(Article, pk=pk) # Article.objects.get(pk=pk) # order_by('id')[pk-1]
     worker = article.author  #Worker.objects.filter(id=pk).prefetch_related('author')
+    #if worker.user == User:
+    user_now = worker.user
     context = {'worker': worker,
                'article': article,
+               'user_now': user_now,
                }
     return render(request, 'article_detail.html', context)
 
@@ -54,9 +66,11 @@ def login_request(request):
     return render(request=request, template_name="blog/login.html", context={"login_form": form})
 
 
-class ArticleList(generic.ListView):
-    queryset = Article.objects.filter(status=1).order_by('-created_on')
-    template_name = 'index.html'
+#class ArticleList(generic.ListView):
+#    queryset = Article.objects.filter(status=1, ).order_by('-created_on')
+#    template_name = 'index.html'
+
+
 
 
 class ArticleDetail(generic.DetailView):

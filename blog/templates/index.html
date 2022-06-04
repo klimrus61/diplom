@@ -30,27 +30,35 @@
         </div>
     </div>
 </header>
-<div class="container">
-    <div class="row">
-        <!-- Blog Entries Column -->
-        <div class="col-md-8 mt-3 left">
-            {% for article in article_list %}
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h2 class="card-title">{{ article.title }}</h2>
-                    <p class="card-text text-muted h6">{{ article.author }} | {{ article.created_on}} </p>
-                    <p class="card-text"> Номера билетов: {{article.text_b|slice:":200" }}</p>
-                    <p class="card-text"> Количество поездок: {{ article.trips_num }}</p>
-                    <p class="card-text"> Дней отработал: {{ article.num_days_worked }}</p>
-                    <p class="card-text"> Проверил: {{ article.pers_check }}</p>
-                    <p class="card-text"> Период поездок с {{ article.data_per_1 }} по {{ article.data_per_2 }}</p>
-                    <p class="card-text">{{ article.num_days_worked }}</p>
-                    <a href="{% url 'article_detail' article.pk  %}" class="btn btn-primary">Read More &rarr;</a>
+{% if user.is_authenticated %}
+    <div class="container">
+        <div class="row">
+            <!-- Blog Entries Column -->
+            <div class="col-md-8 mt-3 left">
+                {% for article in article_list %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ article.title }}</h2>
+                        <p class="card-text text-muted h6">{{ article.author }} | {{ article.created_on}} </p>
+                        <p class="card-text"> Номера билетов: {{article.text_b|slice:":200" }}</p>
+                        <p class="card-text"> Количество поездок: {{ article.trips_num }}</p>
+                        <p class="card-text"> Дней отработал: {{ article.num_days_worked }}</p>
+                        <p class="card-text"> Проверил: {{ article.pers_check }}</p>
+                        <p class="card-text"> Период поездок с {{ article.data_per_1 }} по {{ article.data_per_2 }}</p>
+                        <a href="{% url 'article_detail' article.pk  %}" class="btn btn-primary">Read More &rarr;</a>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
         </div>
-        {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
     </div>
-</div>
+{% else %}
+    <div>
+        <p>You are not logged in</p>
+        <a href="{% url 'login' %}">Log In</a>
+        <br>
+        <a href="{% url 'register' %}">Зарегестрироваться</a>
+    </div>
+{% endif %}
 {%endblock%}

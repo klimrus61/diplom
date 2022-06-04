@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-8-jq3s7wd4lzgvsvh%ux*8fi6$&*$j!8cp(dr(05!&bq6x0(@9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['klimrus61.github.io/', 'klimrus61.github.io/diplom/', '127.0.0.1']
 
 
 # Application definition
@@ -127,5 +127,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = ''
-
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
