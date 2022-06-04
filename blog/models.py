@@ -4,6 +4,8 @@ from django.utils import timezone
 from django.template.defaultfilters import slugify  # new
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 
 STATUS = (
@@ -38,6 +40,12 @@ class Worker(models.Model):
     order_num = models.CharField(max_length=20)
     slug = models.SlugField(null=False, unique=True)
 
+
+@receiver(post_save, sender=User)
+def update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Worker.objects.create(user=instance)
+    instance.profile.save()
     def __str__(self):
         return self.full_name
 
