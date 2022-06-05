@@ -6,7 +6,11 @@ class ArticleAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',), }
 
 
-admin.site.register(models.Worker)
+class WorkerAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('full_name',), }
+
+
+admin.site.register(models.Worker, WorkerAdmin)
 admin.site.register(models.Moderator)
 admin.site.register(models.Article, ArticleAdmin)
 

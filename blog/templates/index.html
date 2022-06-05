@@ -35,19 +35,50 @@
         <div class="row">
             <!-- Blog Entries Column -->
             <div class="col-md-8 mt-3 left">
-                {% for article in article_list %}
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h2 class="card-title">{{ article.title }}</h2>
-                        <p class="card-text text-muted h6">{{ article.author }} | {{ article.created_on}} </p>
-                        <p class="card-text"> Номера билетов: {{article.text_b|slice:":200" }}</p>
-                        <p class="card-text"> Количество поездок: {{ article.trips_num }}</p>
-                        <p class="card-text"> Дней отработал: {{ article.num_days_worked }}</p>
-                        <p class="card-text"> Проверил: {{ article.pers_check }}</p>
-                        <p class="card-text"> Период поездок с {{ article.data_per_1 }} по {{ article.data_per_2 }}</p>
-                        <a href="{% url 'article_detail' article.pk  %}" class="btn btn-primary">Read More &rarr;</a>
+                <p class="card-text"> Проверенные формы: </p>
+                {% for article in article_list_check %}
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ article.title }}</h2>
+                            <p class="card-text text-muted h6">{{ article.author }} | {{ article.created_on}} </p>
+                            <p class="card-text"> Номера билетов: {{article.text_b|slice:":200" }}</p>
+                            <p class="card-text"> Количество поездок: {{ article.trips_num }}</p>
+                            <p class="card-text"> Дней отработал: {{ article.num_days_worked }}</p>
+                            <p class="card-text"> Проверил: {{ article.pers_check }}</p>
+                            <p class="card-text"> Период поездок с {{ article.data_per_1 }} по {{ article.data_per_2 }}</p>
+                            <a href="{% url 'article_detail' article.pk  %}" class="btn btn-primary">Получить полную информацию &rarr;</a>
+                        </div>
                     </div>
-                </div>
+                {% endfor %}
+                <p class="card-text"> Посты на стадии проверки: </p>
+                {% for article in article_list %}
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ article.title }}</h2>
+                            <p class="card-text text-muted h6">{{ article.author }} | {{ article.created_on}} </p>
+                            <p class="card-text"> Номера билетов: {{article.text_b|slice:":200" }}</p>
+                            <p class="card-text"> Количество поездок: {{ article.trips_num }}</p>
+                            <p class="card-text"> Дней отработал: {{ article.num_days_worked }}</p>
+                            <p class="card-text"> Проверил: {{ article.pers_check }}</p>
+                            <p class="card-text"> Период поездок с {{ article.data_per_1 }} по {{ article.data_per_2 }}</p>
+                            <a href="{% url 'article_detail' article.pk  %}" class="btn btn-primary">Получить полную информацию &rarr;</a>
+                        </div>
+                    </div>
+                {% endfor %}
+                <p class="card-text"> Отклоненные посты: </p>
+                {% for article in article_list_error %}
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ article.title }}</h2>
+                            <p class="card-text text-muted h6">{{ article.author }} | {{ article.created_on}} </p>
+                            <p class="card-text"> Номера билетов: {{article.text_b|slice:":200" }}</p>
+                            <p class="card-text"> Количество поездок: {{ article.trips_num }}</p>
+                            <p class="card-text"> Дней отработал: {{ article.num_days_worked }}</p>
+                            <p class="card-text"> Проверил: {{ article.pers_check }}</p>
+                            <p class="card-text"> Период поездок с {{ article.data_per_1 }} по {{ article.data_per_2 }}</p>
+                            <a href="{% url 'article_detail' article.pk  %}" class="btn btn-primary">Получить полную информацию &rarr;</a>
+                        </div>
+                    </div>
                 {% endfor %}
             </div>
             {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}

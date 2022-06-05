@@ -3,7 +3,7 @@ from django.db import models
 from django.utils import timezone
 from django.template.defaultfilters import slugify  # new
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth import models as m
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
@@ -14,9 +14,7 @@ STATUS = (
     (2,"Ошибка")
 )
 
-
 class Moderator(models.Model):
-
     class Meta:
         db_table = "moderator"
 
@@ -31,31 +29,25 @@ class Worker(models.Model):
     class Meta:
         db_table = "worker"
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    full_name = models.CharField(max_length=100)
-    trail = models.CharField(max_length=255)
-    work_post = models.CharField(max_length=20)
-    tabel_num = models.CharField(max_length=20)
-    hired = models.DateField()
-    order_num = models.CharField(max_length=20)
+    user = models.OneToOneField(m.User, on_delete=models.CASCADE, primary_key=True)
+    full_name = models.CharField('ФИО', max_length=100)
+    trail = models.CharField("Постоянный маршрут", max_length=255)
+    work_post = models.CharField("Должность", max_length=20)
+    tabel_num = models.CharField("Табельный номер", max_length=20)
+    hired = models.DateField("Принят на работу")
+    order_num = models.CharField('Номер приказа', max_length=20)
     slug = models.SlugField(null=False, unique=True)
 
-
-@receiver(post_save, sender=User)
-def update_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Worker.objects.create(user=instance)
-    instance.profile.save()
     def __str__(self):
         return self.full_name
-
-    def get_absolute_url(self):
-        return reverse('worker_detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):  # new auto slug outside admin.py
         if not self.slug:
             self.slug = slugify(self.full_name)
         return super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('worker_detail', kwargs={'pk': self.pk})
 
 
 class Article(models.Model):

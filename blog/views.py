@@ -8,6 +8,19 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 
 
+def worker_detail(request, pk):
+    worker = get_object_or_404(Worker, pk=pk) # Article.objects.get(pk=pk) # order_by('id')[pk-1]
+    context = {'worker': worker,
+               }
+    return render(request, 'blog/worker_detail.html', context)
+
+
+class AddWorkerView(generic.CreateView):
+    model = Worker
+    template_name = 'blog/add_worker.html'
+    fields = ['full_name', 'user', 'trail', 'work_post', 'tabel_num', 'hired', 'order_num']
+
+
 class AddArticleView(generic.CreateView):
     model = Article
     template_name = 'blog/add_article.html'
@@ -15,9 +28,14 @@ class AddArticleView(generic.CreateView):
 
 
 def article_list(request):
-    article = Article.objects.filter(status=1, author_id=request.user.id).order_by('-created_on')
+    article_zero = Article.objects.filter(status=0, author_id=request.user.id).order_by('-created_on')
+    article_list_check = Article.objects.filter(status=1, author_id=request.user.id).order_by('-created_on')
+    article_error = Article.objects.filter(status=2, author_id=request.user.id).order_by('-created_on')
     context = {
-        'article_list': article,
+        'article_list': article_zero,
+        'article_list_check': article_list_check,
+        'article_list_error': article_error,
+
     }
     return render(request, 'index.html', context)
 
